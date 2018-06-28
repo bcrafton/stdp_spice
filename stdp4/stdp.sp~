@@ -70,13 +70,13 @@ vs1 vdd  gnd dc 1.1
 
 * vs2 pre  gnd PWL( 0m, 1.1, 2m, 1.1, 2.001m, 0.0, 2.01m, 0.0, 2.011m, 1.1, 20.0m, 1.1 )
 * vs3 post gnd PWL( 0m, 1.1, 4m, 1.1, 4.001m, 0.0, 4.01m, 0.0, 4.011m, 1.1, 15.0m, 1.1,  15.001m, 0.0, 15.01m, 0.0, 15.011m, 1.1, 20.0m, 1.1 )
-vs2 pre  gnd pulse( 1.1 0 2m 0.1n 0.1n 0.01m 10m )
-vs3 post gnd pulse( 1.1 0 4m 0.1n 0.1n 0.01m 10m )
+vs2 pre  gnd pulse( 1.1 0 2m 0.1n 0.1n 0.01m 100m )
+vs3 post gnd pulse( 1.1 0 4m 0.1n 0.1n 0.01m 100m )
 
 vs5 vb1  gnd dc 1.075
 vs6 vb2  gnd dc 1.075
 
-.tran 1n 1
+.tran 1n 10
 .option post=2 method=gear
 .probe v(x*.*) i(x*.*)
 
