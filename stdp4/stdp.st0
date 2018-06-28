@@ -1,0 +1,60 @@
+****** HSPICE -- M-2017.03-1 linux64 (Mar 29 2017) ******
+ Input File: stdp.sp
+ lic:
+ lic: FLEXlm: SDK_11.6.4
+ lic: USER:   bcrafton3            HOSTNAME: ecelinsrvx.ece.gatech.edu
+ lic: HOSTID: "ecf4bbde0d30"       PID:      87167
+ lic: Using FLEXlm license file:
+ lic: 1910@ecewinsrv1.ece.gatech.edu
+ lic: Checkout 1 hspice
+ lic: License/Maintenance for hspice will expire on 12-dec-2018/2017.12
+ lic: 1(in_use)/50(total) FLOATING license(s) on SERVER 1910@ecewinsrv1.ece.gatech.edu
+ lic:
+ init: begin read circuit files,  cpu clock=  6.20E-01
+       option search = /tools/synopsys/hspice/m2017031/hspice/parts/ad
+       option search = /tools/synopsys/hspice/m2017031/hspice/parts/beh
+                         ave
+       option search = /tools/synopsys/hspice/m2017031/hspice/parts/bjt
+       option search = /tools/synopsys/hspice/m2017031/hspice/parts/bur
+                         r_brn
+       option search = /tools/synopsys/hspice/m2017031/hspice/parts/com
+                         linear
+       option search = /tools/synopsys/hspice/m2017031/hspice/parts/dio
+       option search = /tools/synopsys/hspice/m2017031/hspice/parts/fet
+       option search = /tools/synopsys/hspice/m2017031/hspice/parts/lin
+                         _tech
+       option search = /tools/synopsys/hspice/m2017031/hspice/parts/pci
+       option search = /tools/synopsys/hspice/m2017031/hspice/parts/sig
+                         net
+       option search = /tools/synopsys/hspice/m2017031/hspice/parts/ti
+       option search = /tools/synopsys/hspice/m2017031/hspice/parts/tli
+                         ne
+       option search = /tools/synopsys/hspice/m2017031/hspice/parts/xil
+                         inx
+       option runlvl
+       option post =     2.00
+       option method = gear
+ init: end read circuit files,  cpu clock=  6.30E-01 peak memory=       276 mb
+ init: begin check errors,  cpu clock=  6.30E-01
+ init: end check errors,  cpu clock=  6.50E-01 peak memory=       277 mb
+ init: begin setup matrix, pivot=     0 cpu clock=  6.50E-01
+       establish matrix -- done,  cpu clock=  6.50E-01 peak memory=       277 mb
+       re-order matrix -- done,  cpu clock=  6.50E-01 peak memory=       277 mb
+ init: end setup matrix,  cpu clock=  6.60E-01 peak memory=       277 mb
+ dcop: begin dcop,  cpu clock=  6.60E-01
+ dcop: end dcop,  cpu clock=  6.80E-01 peak memory=       277 mb  tot_iter=      40
+ output: stdp.tr0
+ sweep: tran tran0    begin, stop_t=  1.00E+00 #sweeps=**** cpu clock=  6.90E-01
+ tran: time= 1.0022E-01 tot_iter=    2795 conv_iter=    1188 cpu clock= 3.55E+00
+ tran: time= 2.0024E-01 tot_iter=    5544 conv_iter=    2356 cpu clock= 5.51E+00
+ tran: time= 3.0001E-01 tot_iter=    8295 conv_iter=    3522 cpu clock= 7.46E+00
+ tran: time= 4.0002E-01 tot_iter=   11050 conv_iter=    4689 cpu clock= 9.47E+00
+ tran: time= 5.0003E-01 tot_iter=   13806 conv_iter=    5858 cpu clock= 1.15E+01
+ tran: time= 6.0005E-01 tot_iter=   16564 conv_iter=    7026 cpu clock= 1.36E+01
+ tran: time= 7.0007E-01 tot_iter=   19319 conv_iter=    8192 cpu clock= 1.57E+01
+ tran: time= 8.0009E-01 tot_iter=   22074 conv_iter=    9360 cpu clock= 1.77E+01
+ tran: time= 9.0013E-01 tot_iter=   24833 conv_iter=   10527 cpu clock= 1.98E+01
+ tran: time= 1.0000E+00 tot_iter=   27591 conv_iter=   11696 cpu clock= 2.19E+01
+ sweep: tran tran0    end,  cpu clock=  2.19E+01 peak memory=       272 mb
+>info:         ***** hspice job concluded
+ lic: Release hspice token(s)

@@ -1,0 +1,15 @@
+* "simulator" "HSPICE" 
+* "version" "M-2017.03-1 linux64"
+* "format" "HSP"
+* "rundate" "17:26:03 06/25/2018 "
+* "netlist" "rccircuit.sp "
+* "runtitle" ""
+* time =    0.            
+* temperature =   25.0000        
+*** BEGIN: Saved Operating Point ***                     
+.option 
++ gmindc=   1.0000p       
+.nodeset
++ vo =   0.            
++ vs =   0.            
+***   END: Saved Operating Point ***                     

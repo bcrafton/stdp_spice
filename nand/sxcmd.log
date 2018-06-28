@@ -1,0 +1,11 @@
+### SPICE Explorer log file, revision C2009.03 (build 0903) ###
+### created at 16:59:52 on Tue Jun 26 2018 (Linux AMD64) ###
+# (0) SW_SX_PERL_LIB defined
+# (0) SW_SX_TCL_LIB defined
+# (0) HOME defined
+# (0) HOME defined
+sx_open_sim_file_read "/nethome/bcrafton3/spice/nand/nand.tr0"
+sx_log "disp_sig 1 A P=null file=0 S='' W='v(v2)'' "
+sx_log "disp_sig 1 A P=0 file=0 S='' W='v(v1)'' "
+sx_log "disp_sig 1 A P=1 file=0 S='' W='v(a)'' "
+sx_log "disp_sig 1 A P=2 file=0 S='' W='v(b)'' "

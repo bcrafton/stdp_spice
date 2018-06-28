@@ -1,0 +1,78 @@
+Using: /tools/synopsys/hspice/m2017031/hspice/linux64/hspice rccircuit.sp
+ ****** HSPICE -- M-2017.03-1 linux64 (Mar 29 2017) ******                      
+  Copyright (c) 1986 - 2018 by Synopsys, Inc. All Rights Reserved.              
+  This software and the associated documentation are proprietary
+  to Synopsys, Inc. This software may only be used in accordance
+  with the terms and conditions of a written license agreement with
+  Synopsys, Inc. All other use, reproduction, or distribution of
+  this software is strictly prohibited.
+  Input File: rccircuit.sp                                                      
+  Command line options: /tools/synopsys/hspice/m2017031/hspice/linux64/hspice rccircuit.sp
+ lic:  
+ lic: FLEXlm: SDK_11.6.4 
+ lic: USER:   bcrafton3            HOSTNAME: ecelinsrvx.ece.gatech.edu 
+ lic: HOSTID: "ecf4bbde0d30"       PID:      93306 
+ lic: Using FLEXlm license file: 
+ lic: 1910@ecewinsrv1.ece.gatech.edu 
+ lic: Checkout 1 hspice 
+ lic: License/Maintenance for hspice will expire on 12-dec-2018/2017.12 
+ lic: 3(in_use)/50(total) FLOATING license(s) on SERVER 1910@ecewinsrv1.ece.gatech.edu 
+ lic:   
+ **error** attempts to redefine r1               at line        0 and line        1
+
+
+          ***** job aborted
+1****** HSPICE -- M-2017.03-1 linux64 (Mar 29 2017) ******                      
+ ******  
+ vs vs gnd pwl (0s 0v 5ms 0v 5.001ms 5v 10ms 5v)
+
+ ****** job statistics summary tnom=  25.000 temp=  25.000 ******
+  
+  
+ ******  Machine Information  ******
+ CPU:
+ model name	: Intel(R) Xeon(R) CPU E5-4610 v2 @ 2.30GHz
+ cpu MHz	: 2299.805
+  
+ OS:
+ Linux version 2.6.32-696.23.1.el6.x86_64 (mockbuild@x86-027.build.eng.bos.redhat.com) (gcc version 4.4.7 20120313 (Red Hat 4.4.7-18) (GCC) ) #1 SMP Sat Feb 10 11:10:31 EST 2018
+
+
+  ******  HSPICE Threads Information  ******
+
+  Command Line Threads Count :     1
+  Available CPU Count        :    64
+  Actual Threads Count       :     1
+
+
+  ******  Circuit Statistics  ******
+  # nodes       =       0 # elements   =       2
+  # resistors   =       2 # capacitors =       0 # inductors   =       0
+  # mutual_inds =       0 # vccs       =       0 # vcvs        =       0
+  # cccs        =       0 # ccvs       =       0 # volt_srcs   =       0
+  # curr_srcs   =       0 # diodes     =       0 # bjts        =       0
+  # jfets       =       0 # mosfets    =       0 # U elements  =       0
+  # T elements  =       0 # W elements =       0 # B elements  =       0
+  # S elements  =       0 # P elements =       0 # va device   =       0
+  # vector_srcs =       0 # N elements =       0
+
+
+  ******  Runtime Statistics (seconds)  ******
+
+  analysis           time    # points   tot. iter  conv.iter
+  op point           0.00           1           0
+  readin             0.03
+  errchk             0.00
+  setup              0.00
+  output             0.00
+
+
+           peak memory used        276.89 megabytes
+           total cpu time            0.03 seconds
+           total elapsed time        0.55 seconds
+           job started at     17:12:37 06/25/2018
+           job ended   at     17:12:38 06/25/2018
+
+
+ lic: Release hspice token(s) 
+ lic: total license checkout elapse time:        0.52(s)
