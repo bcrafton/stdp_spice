@@ -1,0 +1,1 @@
+for d in ./*/ ; do (cd "$d" && rm *.ic0 rm *.st0 rm *.tr0 rm *.log); done

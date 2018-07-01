@@ -1,7 +1,0 @@
-### SPICE Explorer log file, revision C2009.03 (build 0903) ###
-### created at 18:00:58 on Thu Jun 28 2018 (Linux AMD64) ###
-# (0) SW_SX_PERL_LIB defined
-# (0) SW_SX_TCL_LIB defined
-# (0) HOME defined
-# (0) HOME defined
-sx_open_sim_file_read "/nethome/bcrafton3/stdp_spice/stdp4/stdp.tr0"
