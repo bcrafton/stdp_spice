@@ -54,7 +54,7 @@ vs4 vsf  gnd dc 0.25
 vs5 vrfr gnd dc 0.2
 
 *****************************
-.tran 1n 1m
+.tran 1n 10m
 .option post=2 nomod
 *****************************
 

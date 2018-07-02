@@ -1,111 +1,66 @@
 
-*****************************
-.subckt inv vdd i o
-mpmos1 o i vdd vdd pmos w=45n l=30n
-mnmos1 o i gnd gnd nmos w=45n l=30n
-.ends inv
-*****************************
-.subckt nor vdd a b o
-mpmos1 x a vdd vdd pmos w=45n l=30n
-mpmos2 o b x   vdd pmos w=45n l=30n
-mnmos1 o a gnd gnd nmos w=45n l=30n
-mnmos2 o b gnd gnd nmos w=45n l=30n
-.ends nor
-*****************************
-.subckt nand vdd a b o
-mpmos1 o a vdd vdd pmos w=45n l=30n
-mpmos2 o b vdd vdd pmos w=45n l=30n
-mnmos1 o a x   gnd nmos w=45n l=30n
-mnmos2 x b gnd gnd nmos w=45n l=30n
-.ends nand
-*****************************
-.subckt or vdd a b o
-mpmos1 x a vdd vdd pmos w=45n l=30n
-mpmos2 y b x   vdd pmos w=45n l=30n
-mnmos1 y a gnd gnd nmos w=45n l=30n
-mnmos2 y b gnd gnd nmos w=45n l=30n
-mpmos3 o y vdd vdd pmos w=45n l=30n
-mnmos3 o y gnd gnd nmos w=45n l=30n
-.ends or
-*****************************
-.subckt memristor plus minus Ron=1meg Roff=100meg Rini=20meg
-.param uv=0.00001f D=10n k='uv*Ron/D**2' a='(Rini-Ron)/(Roff-Rini)'
-Rmem plus minus R='Roff + (Ron-Roff)/(1 + a * exp(-4 * k * V(Q)))'
-Gx   gnd Q cur='i(Rmem)'
-Cint Q gnd 1u
-Raux Q gnd 100meg
-.ends memristor
-*****************************
-.subckt synapse vdd pre post out
+***************************
+.subckt neuron vdd vmem vspk
 
-* pren
-xinv1 vdd pre pren inv
+m20 vmem vlk   gnd gnd nmos w=45n l=30n
 
-* PREX
-mpmos3 pre_out vb1  vdd     vdd pmos w=45n l=30n
-mpmos4 gnd     pre  pre_out vdd pmos w=45n l=30n
-cap1   vdd pre_out 200f
+m19 vmem vca   gnd gnd nmos w=45n l=30n
+m18 vca  vspk  v1  gnd nmos w=45n l=30n
+m17 v1   v1    gnd gnd nmos w=45n l=30n
 
-* POSTX
-mpmos5 post_out vb2  vdd      vdd pmos w=45n l=30n
-mpmos6 gnd      post post_out vdd pmos w=45n l=30n
-cap2   vdd  post_out 100f
+m16 v1   vadp  v2  vdd pmos w=45n l=30n
+m15 v2   vo1   vdd vdd pmos w=45n l=30n
 
-* prex postx
-xnor1 vdd pre_out post_out inc nor
+m13 vspk vo1   vdd vdd pmos w=45n l=30n
+m14 vspk vo1   gnd gnd nmos w=45n l=30n
 
-* PREX postx
-xinv2 vdd pre_out  pre_outn inv
-xnor2 vdd pre_outn post_out dec nor 
+m12 vmem vo2   gnd gnd nmos w=45n l=30n
 
-* prex postx or pre
-xor1 vdd inc pren read or 
+m11 v3   vrfr  gnd gnd nmos w=45n l=30n
+m10 vo2  vo1   v3  gnd nmos w=45n l=30n
+m9  vo2  vo1   v4  vdd pmos w=45n l=30n
+m8  v4   v4    vdd vdd pmos w=45n l=30n
 
-* control
-mnmos23 vdd read vp  gnd nmos w=45n l=30n
-mnmos24 vdd dec  vm  gnd nmos w=45n l=30n
-mnmos25 vp  dec  gnd gnd nmos w=45n l=30n
-mnmos26 vm  inc  gnd gnd nmos w=45n l=30n
+m7 vmem  v5    v6  vdd pmos w=45n l=30n
+m6 v6    vo1   vdd vdd pmos w=45n l=30n
 
-xmemr vp vm memristor
+m5 vo1   vin   gnd gnd nmos w=45n l=30n
+m4 vo1   vin   v5  vdd pmos w=45n l=30n
+m3 v5    v5    vdd vdd pmos w=45n l=30n
 
-* READ
-mnmos21 vm pren gnd gnd nmos w=45n l=30n
-* cap3 out gnd 50f
+m2 vdd   vmem  vin gnd nmos w=45n l=30n
+m1 vin   vsf   gnd gnd nmos w=45n l=30n
+
+***************************
+cmem vmem gnd 500f
+c1   vo2  gnd 100f
+c2   vca  gnd 100f
+***************************
+* sources
+vs1 vlk  gnd dc 0.2
+* pmos
+vs2 vadp gnd dc 0.9
+* vsf = 0.65
+vs3 vsf  gnd dc 0.25
+* rfr = 300, 350, 450
+vs4 vrfr gnd dc 0.2
+***************************
+.ends neuron
+***************************
+
+xneuron1 vdd vin vout neuron
+
+***************************
 
 * sources
-vs1 vb1  gnd dc 1.075
-vs2 vb2  gnd dc 1.075
-
-Ex out gnd val='i(mnmos21)'
-
-.ends synapse
-*****************************
-
-* sources
-vs1 vdd  gnd dc 1.1
-
-vs2 pre1 gnd pulse( 1.1 0 48m 0.1n 0.1n 0.01m 100m )
-vs3 pre2 gnd pulse( 1.1 0 25m 0.1n 0.1n 0.01m 100m )
-vs4 pre3 gnd pulse( 1.1 0 70m 0.1n 0.1n 0.01m 100m )
-vs5 pre4 gnd pulse( 1.1 0 80m 0.1n 0.1n 0.01m 100m )
-
-* vs6 post gnd pulse( 1.1 0 50m 0.1n 0.1n 0.01m 100m )
-vs6 post gnd dc 1.1
-
-xsyn1 vdd pre1 post out1 synapse
-xsyn2 vdd pre2 post out2 synapse
-xsyn3 vdd pre3 post out3 synapse
-xsyn4 vdd pre4 post out4 synapse
-
-Ex out gnd val='v(out1) + v(out2) + v(out3) + v(out4)'
-* C1 out gnd 1p
+is1 vdd vin pulse( 0 5n 100u 0.1n 0.1n 25u 200u )
+* is1 vdd vin PL(0 0 0 100u 1n 100.1u) 
+vs1 vdd gnd  dc 1.1
 
 *****************************
 
-.tran 1n 10
-.option post=2 method=gear
-.probe v(x*.*) i(x*.*)
+.tran 1n 10m
+.option post=2 nomod
 
 *****************************
 

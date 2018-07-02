@@ -1,4 +1,51 @@
 
+***************************
+.subckt neuron vdd vmem vspk
+
+m20 vmem vlk   gnd gnd nmos w=45n l=30n
+
+m19 vmem vca   gnd gnd nmos w=45n l=30n
+m18 vca  vspk  v1  gnd nmos w=45n l=30n
+m17 v1   v1    gnd gnd nmos w=45n l=30n
+
+m16 v1   vadp  v2  vdd pmos w=45n l=30n
+m15 v2   vo1   vdd vdd pmos w=45n l=30n
+
+m13 vspk vo1   vdd vdd pmos w=45n l=30n
+m14 vspk vo1   gnd gnd nmos w=45n l=30n
+
+m12 vmem vo2   gnd gnd nmos w=45n l=30n
+
+m11 v3   vrfr  gnd gnd nmos w=45n l=30n
+m10 vo2  vo1   v3  gnd nmos w=45n l=30n
+m9  vo2  vo1   v4  vdd pmos w=45n l=30n
+m8  v4   v4    vdd vdd pmos w=45n l=30n
+
+m7 vmem  v5    v6  vdd pmos w=45n l=30n
+m6 v6    vo1   vdd vdd pmos w=45n l=30n
+
+m5 vo1   vin   gnd gnd nmos w=45n l=30n
+m4 vo1   vin   v5  vdd pmos w=45n l=30n
+m3 v5    v5    vdd vdd pmos w=45n l=30n
+
+m2 vdd   vmem  vin gnd nmos w=45n l=30n
+m1 vin   vsf   gnd gnd nmos w=45n l=30n
+
+***************************
+cmem vmem gnd 500f
+c1   vo2  gnd 100f
+c2   vca  gnd 100f
+***************************
+* sources
+vs1 vlk  gnd dc 0.2
+* pmos
+vs2 vadp gnd dc 0.9
+* vsf = 0.65
+vs3 vsf  gnd dc 0.25
+* rfr = 300, 350, 450
+vs4 vrfr gnd dc 0.2
+***************************
+.ends neuron
 *****************************
 .subckt inv vdd i o
 mpmos1 o i vdd vdd pmos w=45n l=30n
@@ -77,7 +124,8 @@ mnmos21 vm pren gnd gnd nmos w=45n l=30n
 vs1 vb1  gnd dc 1.075
 vs2 vb2  gnd dc 1.075
 
-Ex out gnd val='i(mnmos21)'
+* Ex out gnd val='i(mnmos21)'
+Ex out gnd val='i(xmemr.Rmem)'
 
 .ends synapse
 *****************************
@@ -85,10 +133,12 @@ Ex out gnd val='i(mnmos21)'
 * sources
 vs1 vdd  gnd dc 1.1
 
-vs2 pre1 gnd pulse( 1.1 0 48m 0.1n 0.1n 0.01m 100m )
-vs3 pre2 gnd pulse( 1.1 0 25m 0.1n 0.1n 0.01m 100m )
-vs4 pre3 gnd pulse( 1.1 0 70m 0.1n 0.1n 0.01m 100m )
-vs5 pre4 gnd pulse( 1.1 0 80m 0.1n 0.1n 0.01m 100m )
+* is1 vdd vin pulse( 0 5n 100u 0.1n 0.1n 25u 200u )
+
+vs2 pre1 gnd pulse( 1.1 0 100u 0.1n 0.1n 25u 0.8m )
+vs3 pre2 gnd pulse( 1.1 0 300u 0.1n 0.1n 25u 0.8m )
+vs4 pre3 gnd pulse( 1.1 0 500u 0.1n 0.1n 25u 0.8m )
+vs5 pre4 gnd pulse( 1.1 0 700u 0.1n 0.1n 25u 0.8m )
 
 * vs6 post gnd pulse( 1.1 0 50m 0.1n 0.1n 0.01m 100m )
 vs6 post gnd dc 1.1
@@ -98,12 +148,20 @@ xsyn2 vdd pre2 post out2 synapse
 xsyn3 vdd pre3 post out3 synapse
 xsyn4 vdd pre4 post out4 synapse
 
-Ex out gnd val='v(out1) + v(out2) + v(out3) + v(out4)'
-* C1 out gnd 1p
+* is1 vdd vin PL(0 0 0 4m 1n 4.0001m) 
+
+* for mnmos21
+* Gx vdd vin val='( abs(v(out1) + v(out2) + v(out3) + v(out4)) / 1e2 )'
+* for xmemr.Rmem
+Gx vdd vin val='( abs(v(out1) + v(out2) + v(out3) + v(out4)) / 5 )'
+
+
+xneuron1 vdd vin postn neuron
+* xinv1 vdd postn post inv
 
 *****************************
 
-.tran 1n 10
+.tran 1n 10m
 .option post=2 method=gear
 .probe v(x*.*) i(x*.*)
 

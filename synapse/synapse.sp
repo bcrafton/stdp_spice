@@ -78,7 +78,10 @@ mnmos21 vm pren gnd gnd nmos w=45n l=30n
 * sources
 vs1 vdd  gnd dc 1.1
 vs2 pre  gnd pulse( 1.1 0 2m 0.1n 0.1n 0.01m 100m )
-vs3 post gnd pulse( 1.1 0 4m 0.1n 0.1n 0.01m 100m )
+
+* vs3 post gnd pulse( 1.1 0 4m 0.1n 0.1n 0.01m 100m )
+vs3 post gnd dc 1.1
+
 vs5 vb1  gnd dc 1.075
 vs6 vb2  gnd dc 1.075
 
