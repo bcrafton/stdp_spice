@@ -1,61 +1,126 @@
 
-***************************
-m20 vmem vlk   gnd gnd nmos w=45n l=30n
+*****************************
+.subckt inv vdd i o
+mpmos1 o i vdd vdd pmos w=45n l=30n
+mnmos1 o i gnd gnd nmos w=45n l=30n
+.ends inv
+*****************************
+.subckt nor vdd a b o
+mpmos1 x a vdd vdd pmos w=45n l=30n
+mpmos2 o b x   vdd pmos w=45n l=30n
+mnmos1 o a gnd gnd nmos w=45n l=30n
+mnmos2 o b gnd gnd nmos w=45n l=30n
+.ends nor
+*****************************
+.subckt nand vdd a b o
+mpmos1 o a vdd vdd pmos w=45n l=30n
+mpmos2 o b vdd vdd pmos w=45n l=30n
+mnmos1 o a x   gnd nmos w=45n l=30n
+mnmos2 x b gnd gnd nmos w=45n l=30n
+.ends nand
+*****************************
+.subckt or vdd a b o
+mpmos1 x a vdd vdd pmos w=45n l=30n
+mpmos2 y b x   vdd pmos w=45n l=30n
+mnmos1 y a gnd gnd nmos w=45n l=30n
+mnmos2 y b gnd gnd nmos w=45n l=30n
+mpmos3 o y vdd vdd pmos w=45n l=30n
+mnmos3 o y gnd gnd nmos w=45n l=30n
+.ends or
+*****************************
+.subckt memristor plus minus Ron=1meg Roff=100meg Rini=20meg
+.param uv=0.00001f D=10n k='uv*Ron/D**2' a='(Rini-Ron)/(Roff-Rini)'
+Rmem plus minus R='Roff + (Ron-Roff)/(1 + a * exp(-4 * k * V(Q)))'
+Gx   gnd Q cur='i(Rmem)'
+Cint Q gnd 1u
+Raux Q gnd 100meg
+.ends memristor
+*****************************
 
-m19 vmem vca   gnd gnd nmos w=45n l=30n
-m18 vca  vspk  v1  gnd nmos w=45n l=30n
-m17 v1   v1    gnd gnd nmos w=45n l=30n
+* inputs are pre, pre_out, post_out
+* outputs will be vp, vm
 
-m16 v1   vadp  v2  vdd pmos w=45n l=30n
-m15 v2   vo1   vdd vdd pmos w=45n l=30n
+* pren
+xinv1 vdd pre pren inv
 
-m13 vspk vo1   vdd vdd pmos w=45n l=30n
-m14 vspk vo1   gnd gnd nmos w=45n l=30n
+* PREX
+* mpmos3 pre_out vb1  vdd     vdd pmos w=45n l=30n
+* mpmos4 gnd     pre  pre_out vdd pmos w=45n l=30n
+* cap1   vdd pre_out 200f
 
-m12 vmem vo2   gnd gnd nmos w=45n l=30n
+* POSTX
+* mpmos5 post_out vb2  vdd      vdd pmos w=45n l=30n
+* mpmos6 gnd      post post_out vdd pmos w=45n l=30n
+* cap2   vdd  post_out 100f
 
-m11 v3   vrfr  gnd gnd nmos w=45n l=30n
-m10 vo2  vo1   v3  gnd nmos w=45n l=30n
-m9  vo2  vo1   v4  vdd pmos w=45n l=30n
-m8  v4   v4    vdd vdd pmos w=45n l=30n
+* prex postx
+xnor1 vdd pre_out post_out inc nor
 
-m7 vmem  v5    v6  vdd pmos w=45n l=30n
-m6 v6    vo1   vdd vdd pmos w=45n l=30n
+* PREX postx
+xinv2 vdd pre_out  pre_outn inv
+xnor2 vdd pre_outn post_out dec nor 
 
-m5 vo1   vin   gnd gnd nmos w=45n l=30n
-m4 vo1   vin   v5  vdd pmos w=45n l=30n
-m3 v5    v5    vdd vdd pmos w=45n l=30n
+* prex postx or pre
+xor1 vdd inc pren read or 
 
-m2 vdd   vmem  vin gnd nmos w=45n l=30n
-m1 vin   vsf   gnd gnd nmos w=45n l=30n
+* control
+mnmos23 vdd read vp  gnd nmos w=45n l=30n
+mnmos24 vdd dec  vm  gnd nmos w=45n l=30n
+mnmos25 vp  dec  gnd gnd nmos w=45n l=30n
+mnmos26 vm  inc  gnd gnd nmos w=45n l=30n
 
-cmem vmem gnd 500f
-c1   vo2  gnd 100f
-c2   vca  gnd 100f
+xmemr vp vm memristor
 
-***************************
+* READ
+mnmos21 vm pren gnd gnd nmos w=45n l=30n
 
 * sources
+vs1 vdd  gnd dc 1.1
 
-* 2n
-* is1 vdd vmem dc 100n
-is1 vdd vmem PL(0 0 0 100u 1n 100.1u) 
+* vs2 pre gnd dc 1.1
+vs2 pre gnd PWL( 0.00m,   1.1, 144m,  1.1,     \
+                 144.01m, 0.0, 288m,  0.0,     \
+                 R
+                 )
 
-vs1 vdd gnd  dc 1.1
-vs2 vlk  gnd dc 0.2
+vs3 pre_out  gnd PWL( 0.00m,  0.0, 1m,  0.0,     \
+                 1.01m,  0.1, 2m,  0.1,     \
+                 2.01m,  0.2, 3m,  0.2,     \
+                 3.01m,  0.3, 4m,  0.3,     \
+                 4.01m,  0.4, 5m,  0.4,     \
+                 5.01m,  0.5, 6m,  0.5,     \
+                 6.01m,  0.6, 7m,  0.6,     \
+                 7.01m,  0.7, 8m,  0.7,     \
+                 8.01m,  0.8, 9m,  0.8,     \
+                 9.01m,  0.9, 10m, 0.9,     \
+                 10.01m, 1.0, 11m, 1.0,     \
+                 11.01m, 1.1, 12m, 1.1,     \
+                 R
+                 )
 
-* pmos
-vs3 vadp gnd dc 0.9
+vs4 post_out gnd PWL( 0.000m,  0.0, 12m,  0.0,     \
+                 12.01m,  0.1, 24m,  0.1,     \
+                 24.01m,  0.2, 36m,  0.2,     \
+                 36.01m,  0.3, 48m,  0.3,     \
+                 48.01m,  0.4, 60m,  0.4,     \
+                 60.01m,  0.5, 72m,  0.5,     \
+                 72.01m,  0.6, 84m,  0.6,     \
+                 84.01m,  0.7, 96m,  0.7,     \
+                 96.01m,  0.8, 108m, 0.8,     \
+                 108.01m, 0.9, 120m, 0.9,     \
+                 120.01m, 1.0, 132m, 1.0,     \
+                 132.01m, 1.1, 144m, 1.1,     \
+                 R
+                 )
 
-* vsf = 0.65
-vs4 vsf  gnd dc 0.25
 
-* rfr = 300, 350, 450
-vs5 vrfr gnd dc 0.2
+vs5 vb1  gnd dc 1.075
+vs6 vb2  gnd dc 1.075
 
-*****************************
-.tran 1n 1m
-.option post=2 nomod
+.tran 1n 300m
+.option post=2 method=gear
+.probe v(x*.*) i(x*.*)
+
 *****************************
 
 * PTM Low Power 45nm Metal Gate / High-K / Strained-Si

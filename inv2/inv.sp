@@ -1,62 +1,32 @@
 
-***************************
-m20 vmem vlk   gnd gnd nmos w=45n l=30n
+* drain gate source body
 
-m19 vmem vca   gnd gnd nmos w=45n l=30n
-m18 vca  vspk  v1  gnd nmos w=45n l=30n
-m17 v1   v1    gnd gnd nmos w=45n l=30n
+.subckt inv vdd i o
+mpmos1 o i vdd vdd pmos w=45n l=30n
+mnmos1 o i gnd gnd nmos w=45n l=30n
+.ends inv
 
-m16 v1   vadp  v2  vdd pmos w=45n l=30n
-m15 v2   vo1   vdd vdd pmos w=45n l=30n
+vs1 vdd gnd dc 1.1
 
-m13 vspk vo1   vdd vdd pmos w=45n l=30n
-m14 vspk vo1   gnd gnd nmos w=45n l=30n
+vs2 a gnd PWL( 0.00m,  0.0, 1m,  0.0,     \
+               1.01m,  0.1, 2m,  0.1,     \
+               2.01m,  0.2, 3m,  0.2,     \
+               3.01m,  0.3, 4m,  0.3,     \
+               4.01m,  0.4, 5m,  0.4,     \
+               5.01m,  0.5, 6m,  0.5,     \
+               6.01m,  0.6, 7m,  0.6,     \
+               7.01m,  0.7, 8m,  0.7,     \
+               8.01m,  0.8, 9m,  0.8,     \
+               9.01m,  0.9, 10m, 0.9,     \
+               10.01m, 1.0, 11m, 1.0,     \
+               11.01m, 1.1, 12m, 1.1,     \
+               R
+               )
 
-m12 vmem vo2   gnd gnd nmos w=45n l=30n
-
-m11 v3   vrfr  gnd gnd nmos w=45n l=30n
-m10 vo2  vo1   v3  gnd nmos w=45n l=30n
-m9  vo2  vo1   v4  vdd pmos w=45n l=30n
-m8  v4   v4    vdd vdd pmos w=45n l=30n
-
-m7 vmem  v5    v6  vdd pmos w=45n l=30n
-m6 v6    vo1   vdd vdd pmos w=45n l=30n
-
-m5 vo1   vin   gnd gnd nmos w=45n l=30n
-m4 vo1   vin   v5  vdd pmos w=45n l=30n
-m3 v5    v5    vdd vdd pmos w=45n l=30n
-
-m2 vdd   vmem  vin gnd nmos w=45n l=30n
-m1 vin   vsf   gnd gnd nmos w=45n l=30n
-
-cmem vmem gnd 500f
-c1   vo2  gnd 100f
-c2   vca  gnd 100f
-
-***************************
-
-* sources
-
-* 2n
-* is1 vdd vmem dc 100n
-is1 vdd vmem PL(0 0 0 100u 1n 100.1u) 
-
-vs1 vdd gnd  dc 1.1
-vs2 vlk  gnd dc 0.2
-
-* pmos
-vs3 vadp gnd dc 0.9
-
-* vsf = 0.65
-vs4 vsf  gnd dc 0.25
-
-* rfr = 300, 350, 450
-vs5 vrfr gnd dc 0.2
-
-*****************************
-.tran 1n 1m
+.tran 1n 20m
 .option post=2 nomod
-*****************************
+
+xi vdd a out inv
 
 * PTM Low Power 45nm Metal Gate / High-K / Strained-Si
 * nominal Vdd = 1.1V

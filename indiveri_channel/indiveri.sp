@@ -1,60 +1,72 @@
 
 ***************************
-m20 vmem vlk   gnd gnd nmos w=45n l=30n
+.subckt tamp vdd b p m o
+mpmos1 v1 v1 vdd vdd pmos w=45n l=30n
+mpmos2 o  v1 vdd vdd pmos w=45n l=30n
+mnmos1 v1 p  v2  gnd nmos w=45n l=30n
+mnmos2 o  m  v2  gnd nmos w=45n l=30n
+mnmos3 v2 b  gnd gnd nmos w=45n l=30n
+.ends tamp
+***************************
+***************************
+.subckt inv vdd i o
+mpmos1 o i vdd vdd pmos w=45n l=30n
+mnmos1 o i gnd gnd nmos w=45n l=30n
+.ends inv
+***************************
+m1  v1   vrest vdd vdd pmos w=45n l=30n
+m2  gnd  vthr  gnd vdd pmos w=45n l=30n
+m3  vmem vmem  v1  vdd pmos w=45n l=30n
+m4  vmem vtau  gnd gnd nmos w=45n l=30n
 
-m19 vmem vca   gnd gnd nmos w=45n l=30n
-m18 vca  vspk  v1  gnd nmos w=45n l=30n
-m17 v1   v1    gnd gnd nmos w=45n l=30n
+m5  v3   v4    vdd vdd pmos w=45n l=30n
+m6  v5   vadp  v3  vdd pmos w=45n l=30n
+m7  gnd  vthra v5  vdd pmos w=45n l=30n
+m8  v6   v6    v5  vdd pmos w=45n l=30n
+m9  vmem vca   gnd gnd nmos w=45n l=30n
+m10 vca  valk  gnd gnd nmos w=45n l=30n
 
-m16 v1   vadp  v2  vdd pmos w=45n l=30n
-m15 v2   vo1   vdd vdd pmos w=45n l=30n
+m11 v7   v8    vdd vdd pmos w=45n l=30n
+m12 v8   v8    vdd vdd pmos w=45n l=30n
+m13 vmem v5    v7  vdd pmos w=45n l=30n
 
-m13 vspk vo1   vdd vdd pmos w=45n l=30n
-m14 vspk vo1   gnd gnd nmos w=45n l=30n
+m14 vmem vspk  gnd gnd nmos w=45n l=30n
 
-m12 vmem vo2   gnd gnd nmos w=45n l=30n
+m15 vo1  vmem  v8  vdd pmos w=45n l=30n
+m16 vo1  vmem  v9  gnd nmos w=45n l=30n
+m17 v9   v9    gnd gnd nmos w=45n l=30n
+m18 v4   v4    vdd vdd pmos w=45n l=30n
+m19 vspk vo1   v4  vdd pmos w=45n l=30n
+m20 vspk vo1   v10 gnd nmos w=45n l=30n
 
-m11 v3   vrfr  gnd gnd nmos w=45n l=30n
-m10 vo2  vo1   v3  gnd nmos w=45n l=30n
-m9  vo2  vo1   v4  vdd pmos w=45n l=30n
-m8  v4   v4    vdd vdd pmos w=45n l=30n
+m21 v10  vrf   gnd gnd nmos w=45n l=30n
 
-m7 vmem  v5    v6  vdd pmos w=45n l=30n
-m6 v6    vo1   vdd vdd pmos w=45n l=30n
+m22 vmem vmem  gnd gnd nmos w=45n l=30n
 
-m5 vo1   vin   gnd gnd nmos w=45n l=30n
-m4 vo1   vin   v5  vdd pmos w=45n l=30n
-m3 v5    v5    vdd vdd pmos w=45n l=30n
-
-m2 vdd   vmem  vin gnd nmos w=45n l=30n
-m1 vin   vsf   gnd gnd nmos w=45n l=30n
-
-cmem vmem gnd 500f
-c1   vo2  gnd 100f
-c2   vca  gnd 100f
+cmem vmem gnd 0.5p
+cadp vca  gnd 0.5p
+crf  vrf  gnd 0.5p 
 
 ***************************
 
 * sources
+* is1 vdd vmem dc 1n
 
-* 2n
-* is1 vdd vmem dc 100n
-is1 vdd vmem PL(0 0 0 100u 1n 100.1u) 
+vs1 vdd   gnd dc 1.1
 
-vs1 vdd gnd  dc 1.1
-vs2 vlk  gnd dc 0.2
+vs2 vrest gnd dc 0.25
+vs3 vthr  gnd dc 0.55
 
-* pmos
-vs3 vadp gnd dc 0.9
+vs4 vtau  gnd dc 0.1
 
-* vsf = 0.65
-vs4 vsf  gnd dc 0.25
+vs5 vthra gnd dc 0.55
+vs6 vadp  gnd dc 0.25
+vs7 valk  gnd dc 0.25
 
-* rfr = 300, 350, 450
-vs5 vrfr gnd dc 0.2
+vs8 vrf   gnd dc 0.25
 
 *****************************
-.tran 1n 1m
+.tran 1n 0.1m
 .option post=2 nomod
 *****************************
 
