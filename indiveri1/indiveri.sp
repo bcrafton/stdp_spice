@@ -1,13 +1,20 @@
 
 ***************************
+
 m20 vmem vlk   gnd gnd nmos w=45n l=30n
 
-m19 vmem vca   gnd gnd nmos w=45n l=30n
-m18 vca  vspk  v1  gnd nmos w=45n l=30n
-m17 v1   v1    gnd gnd nmos w=45n l=30n
+****************************************
+* we get rid of this bc they dont have a big impact on our circuit.
+****************************************
+* m19 vmem vca   gnd gnd nmos w=45n l=30n
+* m18 vca  vspk  v1  gnd nmos w=45n l=30n
+* m17 v1   v1    gnd gnd nmos w=45n l=30n
 
-m16 v1   vadp  v2  vdd pmos w=45n l=30n
-m15 v2   vo1   vdd vdd pmos w=45n l=30n
+* m16 v1   vadp  v2  vdd pmos w=45n l=30n
+* m15 v2   vo1   vdd vdd pmos w=45n l=30n
+
+* c2   vca  gnd 100f
+****************************************
 
 m13 vspk vo1   vdd vdd pmos w=45n l=30n
 m14 vspk vo1   gnd gnd nmos w=45n l=30n
@@ -21,7 +28,6 @@ m8  v4   v4    vdd vdd pmos w=45n l=30n
 
 m7 vmem  v5    v6  vdd pmos w=45n l=30n
 m6 v6    vo1   vdd vdd pmos w=45n l=30n
-
 m5 vo1   vin   gnd gnd nmos w=45n l=30n
 m4 vo1   vin   v5  vdd pmos w=45n l=30n
 m3 v5    v5    vdd vdd pmos w=45n l=30n
@@ -31,7 +37,6 @@ m1 vin   vsf   gnd gnd nmos w=45n l=30n
 
 cmem vmem gnd 500f
 c1   vo2  gnd 100f
-c2   vca  gnd 100f
 
 ***************************
 
@@ -54,8 +59,9 @@ vs4 vsf  gnd dc 0.25
 vs5 vrfr gnd dc 0.2
 
 *****************************
-.tran 1n 1m
-.option post=2 nomod
+.tran 1n 10m
+.option post=1 POST_VERSION=9601 method=gear
+.probe i(m*) i(c*)
 *****************************
 
 * PTM Low Power 45nm Metal Gate / High-K / Strained-Si

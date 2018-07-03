@@ -1,2 +1,3 @@
 source /tools/synopsys/hspice/m2017031/cshrc.meta;
-source /tools/linsoft2/synopsys/waveview/cshrc.meta
+# source /tools/linsoft2/synopsys/waveview/cshrc.meta
+source /tools/linsoft2/synopsys/custexplor/cshrc.meta
