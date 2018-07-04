@@ -28,21 +28,20 @@ m1 vin   vsf   gnd gnd nmos w=45n l=30n
 
 * sources
 
-is1 vdd vmem PL(0 0 0 5m 1n 5.001m) 
-
 vs1 vdd gnd  dc 1.1
 vs2 vlk  gnd dc 0.2
 vs3 vadp gnd dc 0.9
 vs4 vsf  gnd dc 0.25
 vs5 vrfr gnd dc 0.2
 
+is1 vdd vmem PL(0 0 0 5m 1n 5.001m)
 vsmem vmem gnd PWL(0m, 0, 1m, 1, 2m, 0, R)
 vso2 vo2  gnd PWL(0m, 0, 1u, 1, 2u, 0, R)
 
 *****************************
 .tran 1n 10m
 .option post=1 POST_VERSION=9601 method=gear
-.probe i(m*) i(c*)
+.probe i(m*) i(c*) i(is1)
 *****************************
 
 * PTM Low Power 45nm Metal Gate / High-K / Strained-Si
