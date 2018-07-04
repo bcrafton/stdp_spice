@@ -7,81 +7,67 @@ x = loadsig('indiveri.tr0');
 
 lssig(x)
 
+% outputs, dependent
 v_vspk = evalsig(x, 'v_vspk');
+i_vso2 = evalsig(x, 'i_vso2');
+i_vsmem = evalsig(x, 'i_vsmem');
 
-
-v_vsmem = evalsig(x, 'v_vsmem');
-v_vso1 = evalsig(x, 'v_vso1');
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%
-% vvo1
-
-vo1_fit = polyfitn([v_vmem, v_vin], v_vo1, 2);
-polyvaln(vo1_fit, [0.6, 0.35]);
+% inputs, independent
+i_is1 = evalsig(x, 'i_is1');
+v_vsmem = evalsig(x, 'v_vmem');
+v_vso1 = evalsig(x, 'v_vo1');
 
 %%%%%%%%%%%%%%%%%%%%%%
-% im7
 
-m7_fit = polyfitn([v_vmem, v_vin], i_m7, 2);
-polyvaln(m7_fit, [0.6, 0.35]);
-
-%%%%%%%%%%%%%%%%%%%%%%
-% ic1
-
-v_vo1 = evalsig(x, 'v_vo1');
-v_vo2 = evalsig(x, 'v_vo2');
-i_c1 = evalsig(x, 'i_c1');
-
-c1_fit = polyfitn([v_vo1, v_vo2], i_c1, 2);
-polyvaln(c1_fit, [0.3, 0.4]);
-polyvaln(c1_fit, [0.9, 0.0]);
-
-%%%%%%%%%%%%%%%%%%%%%%
-% im20
-
-v_vmem = evalsig(x, 'v_vmem');
-i_m20 = evalsig(x, 'i_m20');
-
-m20_fit = polyfitn(v_vmem, i_m20, 2);
-polyvaln(m20_fit, 0.1);
-polyvaln(m20_fit, 0.6);
-
-%%%%%%%%%%%%%%%%%%%%%%
-% im12
-
-v_vmem = evalsig(x, 'v_vmem');
-v_vo2 = evalsig(x, 'v_vo2');
-i_m12 = evalsig(x, 'i_m12');
-
-m12_fit = polyfitn([v_vmem, v_vo2], i_m12, 2);
-polyvaln(m12_fit, [0.5, 0.5]);
+i_vsmem_fit = polyfitn([v_vsmem, v_vso1, i_is1], i_vsmem, 10);
+i_vso2_fit = polyfitn([v_vsmem, v_vso1, i_is1], i_vso2, 10);
 
 %%%%%%%%%%%%%%%%%%%%%%
 
 dt = 1e-6;
-T = 1e-2;
-steps = T / dt;
+T = 1e-3;
+steps = uint32(T / dt);
+
+Ts = linspace(0, T, steps);
+vmems = zeros(steps, 1);
+vo2s = zeros(steps, 1);
+iins = zeros(steps, 1);
+
+C1 = 500e-15;
+C2 = 100e-15;
 
 vmem = 0;
-vo1 = 0;
 vo2 = 0;
+
+dvdt = (1 / C1) * (polyvaln(i_vsmem_fit, [1, 1, 0]));
+disp(dvdt);
 
 for i = 1:steps
     
-    t = i * dt;
-    iin = (t > 1e-3) * 1e-9;
+    t = double(i) * dt;
     
-    dvdt = iin - polyvaln(m20_fit, vmem) + polyvaln(m7_fit, [vmem, vo1]) - polyvaln(m12_fit, [vmem, vo2]);
+    if t > 1e-4
+        iin = 1e-9;
+    else
+        iin = 0;
+    end
+    
+    dvdt = (1 / C1) * (polyvaln(i_vsmem_fit, [vmem, vo2, iin]));
     vmem = vmem + dvdt * dt;
+    vmem = min(max(vmem, -0.1), 1);
     
-    dvdt = polyvaln(c1_fit, [vo1, vo2]);
+    % disp(dvdt);
+    
+    dvdt = (1 / C2) * (polyvaln(i_vso2_fit, [vmem, vo2, iin]));
     vo2 = vo2 + dvdt * dt;
+    vo2 = min(max(vo2, -0.1), 1.0);
     
+    % disp(dvdt);
+    
+    vmems(i) = vmem;
+    vo2s(i) = vo2;
+    iins(i) = iin;
 end
 
-
-
-
-
+%disp(vmems');
+%plot(Ts, vmems);
