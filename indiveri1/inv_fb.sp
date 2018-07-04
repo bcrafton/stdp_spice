@@ -16,11 +16,11 @@ vs3 vadp gnd dc 0.9
 vs4 vsf  gnd dc 0.25
 vs5 vrfr gnd dc 0.2
 
-vsmem vmem gnd PWL(0u, 0, 1u, 1, 2u, 0, R)
+vsmem vmem gnd PWL(0u, 0, 1m, 1)
 *****************************
 .tran 1n 1m
-.option post=1 POST_VERSION=9601 method=gear
-.probe i(m*) i(c*) i(is1)
+.option post=1 POST_VERSION=9601 * ACCURATE=1 * DVDT=2
+.probe i(m*) 
 *****************************
 
 * PTM Low Power 45nm Metal Gate / High-K / Strained-Si
