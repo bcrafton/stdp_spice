@@ -6,11 +6,11 @@ m9  vo2  vo1   v4  vdd pmos w=45n l=30n
 m8  v4   v4    vdd vdd pmos w=45n l=30n
 ***************************
 vs1 vdd gnd dc 1
-vso1 vo1 gnd PWL(0m, 0, 100m, 1)
-vso2 vo2 gnd PWL(0m, 0, 10m, 1, 20m, 0, R)
+vso1 vo1 gnd PWL(0m, 0, 1m, 1)
+vso2 vo2 gnd PWL(0u, 0, 1u, 1, 2u, 0, R)
 vs4 vrfr gnd dc 0.2
 *****************************
-.tran 1n 100m
+.tran 1n 1m
 .option post=1 POST_VERSION=9601 method=gear
 .probe i(m*) i(c*)
 *****************************

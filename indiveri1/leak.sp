@@ -4,9 +4,9 @@ m20 vmem vlk   gnd gnd nmos w=45n l=30n
 ***************************
 vs1 vdd gnd dc 1
 vs2 vlk gnd dc 0.2
-vs3 vmem gnd PWL(0m, 0, 10m, 1)
+vs3 vmem gnd PWL(0u, 0, 1u, 1, 2u, 0, R)
 *****************************
-.tran 1n 10m
+.tran 1n 1m
 .option post=1 POST_VERSION=9601 method=gear
 .probe i(m*) i(c*)
 *****************************
