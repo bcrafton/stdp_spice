@@ -1,18 +1,26 @@
 
 ***************************
-m11 v3   vrfr  gnd gnd nmos w=45n l=30n
-m10 vo2  vo1   v3  gnd nmos w=45n l=30n
-m9  vo2  vo1   v4  vdd pmos w=45n l=30n
-m8  v4   v4    vdd vdd pmos w=45n l=30n
+m7 vmem  v5    v6  vdd pmos w=45n l=30n
+m6 v6    vo1   vdd vdd pmos w=45n l=30n
+m5 vo1   vin   gnd gnd nmos w=45n l=30n
+m4 vo1   vin   v5  vdd pmos w=45n l=30n
+m3 v5    v5    vdd vdd pmos w=45n l=30n
+m2 vdd   vmem  vin gnd nmos w=45n l=30n
+m1 vin   vsf   gnd gnd nmos w=45n l=30n
 ***************************
-vs1 vdd gnd dc 1
-vs2 vo1 gnd PWL(0m, 0, 100m, 1)
-vs3 vo2 gnd PWL(0m, 0, 10m, 1, 20m, 0, R)
-vs4 vrfr gnd dc 0.2
+
+* sources
+vs1 vdd gnd  dc 1.1
+vs2 vlk  gnd dc 0.2
+vs3 vadp gnd dc 0.9
+vs4 vsf  gnd dc 0.25
+vs5 vrfr gnd dc 0.2
+
+vsmem vmem gnd PWL(0m, 0, 10m, 1)
 *****************************
-.tran 1n 100m
+.tran 1n 10m
 .option post=1 POST_VERSION=9601 method=gear
-.probe i(m*) i(c*)
+.probe i(m*) i(c*) i(is1)
 *****************************
 
 * PTM Low Power 45nm Metal Gate / High-K / Strained-Si

@@ -4,7 +4,7 @@ m12 vmem vo2 gnd gnd nmos w=45n l=30n
 ***************************
 vs1 vdd  gnd dc 1
 vs2 vmem gnd PWL(0m, 0, 100m, 1)
-vs3 vo2  gnd PWL(0m, 0, 10m, 1, R)
+vs3 vo2  gnd PWL(0m, 0, 10m, 1, 20m, 0, R)
 *****************************
 .tran 1n 100m
 .option post=1 POST_VERSION=9601 method=gear
