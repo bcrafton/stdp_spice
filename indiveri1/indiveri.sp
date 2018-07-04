@@ -3,19 +3,6 @@
 
 m20 vmem vlk   gnd gnd nmos w=45n l=30n
 
-****************************************
-* we get rid of this bc they dont have a big impact on our circuit.
-****************************************
-* m19 vmem vca   gnd gnd nmos w=45n l=30n
-* m18 vca  vspk  v1  gnd nmos w=45n l=30n
-* m17 v1   v1    gnd gnd nmos w=45n l=30n
-
-* m16 v1   vadp  v2  vdd pmos w=45n l=30n
-* m15 v2   vo1   vdd vdd pmos w=45n l=30n
-
-* c2   vca  gnd 100f
-****************************************
-
 m13 vspk vo1   vdd vdd pmos w=45n l=30n
 m14 vspk vo1   gnd gnd nmos w=45n l=30n
 
@@ -35,28 +22,22 @@ m3 v5    v5    vdd vdd pmos w=45n l=30n
 m2 vdd   vmem  vin gnd nmos w=45n l=30n
 m1 vin   vsf   gnd gnd nmos w=45n l=30n
 
-cmem vmem gnd 500f
-c1   vo2  gnd 100f
-
+* cmem vmem gnd 500f
+* c1   vo2  gnd 100f
 ***************************
 
 * sources
 
-* 2n
-* is1 vdd vmem dc 100n
-is1 vdd vmem PL(0 0 0 100u 1n 100.1u) 
+is1 vdd vmem PL(0 0 0 5m 1n 5.001m) 
 
 vs1 vdd gnd  dc 1.1
 vs2 vlk  gnd dc 0.2
-
-* pmos
 vs3 vadp gnd dc 0.9
-
-* vsf = 0.65
 vs4 vsf  gnd dc 0.25
-
-* rfr = 300, 350, 450
 vs5 vrfr gnd dc 0.2
+
+vsmem vmem gnd PWL(0m, 0, 1m, 1, 2m, 0, R)
+vso2 vo2  gnd PWL(0m, 0, 1u, 1, 2u, 0, R)
 
 *****************************
 .tran 1n 10m
