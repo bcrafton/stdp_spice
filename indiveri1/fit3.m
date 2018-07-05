@@ -32,6 +32,9 @@ v_vo2 = evalsig(reset, 'v_vo2');
 i_m12 = evalsig(reset, 'i_m12');
 
 m12_fit = fit([v_vmem, v_vo2], i_m12, 'poly44');
+
+g = fittype( 'NFET(i0, k, kn, vth, l, x, y)', 'independent', {'x', 'y'}, 'dependent', 'ids' );
+m12_fit = fit([v_vmem, v_vo2], i_m12, g, 'StartPoint', [1e-10, 0.4, 0.4, 0.3, 0.01]);
 %%%%%%%%%%%%%%%%%%%%%%
 % inv_slew
 
@@ -73,10 +76,10 @@ m20_fit(1)
 
 for i = 1:steps
     
-    t = double(i) * dt;
+    t = Ts(i);
     
     if t > 1e-4
-        iin = 1e-8;
+        iin = 1e-9;
     else
         iin = 0;
     end
@@ -86,11 +89,19 @@ for i = 1:steps
     dvdt = (1 / C2) * i_vso2_fit([vo1, vo2]);
     vo2 = vo2 + dvdt * dt;
     vo2 = min(max(vo2, -0.1), 1.0);
+    
+    %disp(dvdt * dt)
+    %disp(vo2);
         
     dvdt = (1 / C1) * (iin - m20_fit(vmem) + m7_fit(vmem) - m12_fit([vmem, vo2]));
     vmem = vmem + dvdt * dt;
     vmem = min(max(vmem, -0.1), 1.0);
         
+    % disp(dvdt * dt);
+    % disp(m20_fit(vmem));
+    % disp(m7_fit(vmem));
+    % disp(m12_fit([vmem, vo2]));
+    
     vmems(i) = vmem;
     vo1s(i) = vo1;
     vo2s(i) = vo2;
