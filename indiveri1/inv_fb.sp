@@ -1,12 +1,12 @@
 
 ***************************
-m7 vmem  v5    v6  vdd pmos w=45n l=30n
-m6 v6    vo1   vdd vdd pmos w=45n l=30n
-m5 vo1   vin   gnd gnd nmos w=45n l=30n
-m4 vo1   vin   v5  vdd pmos w=45n l=30n
-m3 v5    v5    vdd vdd pmos w=45n l=30n
-m2 vdd   vmem  vin gnd nmos w=45n l=30n
-m1 vin   vsf   gnd gnd nmos w=45n l=30n
+m7 v6   v5   vmem vdd pmos w=45n l=30n
+m6 vdd  vo1  v6   vdd pmos w=45n l=30n
+m5 vo1  vin  gnd  gnd nmos w=45n l=30n
+m4 v5   vin  vo1  vdd pmos w=45n l=30n
+m3 vdd  v5   v5   vdd pmos w=45n l=30n
+m2 vdd  vmem vin  gnd nmos w=45n l=30n
+m1 vin  vsf  gnd  gnd nmos w=45n l=30n
 ***************************
 
 * sources
