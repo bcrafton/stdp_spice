@@ -63,7 +63,7 @@ i_vso2 = evalsig(inv_slew, 'i_vso2');
 i_vso2_fit = fit([v_vo1, v_vo2], i_vso2, 'poly44');
 %%%%%%%%%%%%%%%%%%%%%%
 
-dt = 1e-7;
+dt = 1e-8;
 T = 1e-3;
 steps = uint32(T / dt);
 
@@ -91,16 +91,7 @@ C2 = 100e-15;
 % m12_fit(1, 0.6)
 % m12_fit(1, 1)
 
-x1s = linspace(1, 1, 100);
-x2s = linspace(0, 1, 100);
 
-ys = zeros(100, 1);
-
-for i = 1:100
-    ys(i) = NFET1(5e-12, 0.4, 2e-6, 0.325, 0.03, x1s(i), x2s(i));
-end
-% ys = NFET(5e-12, 0.4, 2e-6, 0.325, 0.03, x1s, x2s);
-plot(xs, ys);
 
 for i = 1:steps
     
