@@ -151,4 +151,3 @@ vs3 vmem gnd PWL(0u, 0, 1u, 1, 2u, 0, R)
 +rbps    = 15              rbdb    = 15              rbsb    = 15              ngcon   = 1             
 
 .end
-

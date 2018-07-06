@@ -155,4 +155,3 @@ vs4 vrfr gnd dc 0.2
 +rbps    = 15              rbdb    = 15              rbsb    = 15              ngcon   = 1             
 
 .end
-
