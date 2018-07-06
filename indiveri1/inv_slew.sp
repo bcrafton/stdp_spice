@@ -9,7 +9,7 @@ vs1 vdd gnd dc 1
 vso1 vo1 gnd PWL(0m, -0.2, 1m, 1.5)
 
 * vso2 vo2 gnd PWL(0u, 0, 1u, 1, 2u, 0, R)
-vso2 vo2 gnd SIN(0.6, 0.8, 10000, 0, 0, 0)
+vso2 vo2 gnd SIN(0.6, 0.8, 1000000, 0, 0, 0)
 
 vs4 vrfr gnd dc 0.2
 *****************************
