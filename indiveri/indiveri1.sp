@@ -2,37 +2,45 @@
 ***************************
 m20 vmem vlk   gnd gnd nmos w=45n l=30n
 
-m13 vspk vo1   vdd vdd pmos w=45n l=30n
+* m13 vspk vo1   vdd  vdd pmos w=45n l=30n
+  m13 vdd  vo1   vspk vdd pmos w=45n l=30n
 m14 vspk vo1   gnd gnd nmos w=45n l=30n
 
 m12 vmem vo2   gnd gnd nmos w=45n l=30n
 
 m11 v3   vrfr  gnd gnd nmos w=45n l=30n
 m10 vo2  vo1   v3  gnd nmos w=45n l=30n
-m9  vo2  vo1   v4  vdd pmos w=45n l=30n
-m8  v4   v4    vdd vdd pmos w=45n l=30n
+* m9  vo2  vo1   v4  vdd pmos w=45n l=30n
+  m9  v4  vo1    vo2 vdd pmos w=45n l=30n
+* m8  v4   v4    vdd vdd pmos w=45n l=30n
+  m8  vdd   v4   v4  vdd pmos w=45n l=30n
 
-m7 vmem  v5    v6  vdd pmos w=45n l=30n
-m6 v6    vo1   vdd vdd pmos w=45n l=30n
+* m7 vmem  v5    v6   vdd pmos w=45n l=30n
+  m7 v6    v5    vmem vdd pmos w=45n l=30n
+* m6 v6    vo1   vdd  vdd pmos w=45n l=30n
+  m6 vdd   vo1   v6   vdd pmos w=45n l=30n
 
 m5 vo1   vin   gnd gnd nmos w=45n l=30n
-m4 vo1   vin   v5  vdd pmos w=45n l=30n
-m3 v5    v5    vdd vdd pmos w=45n l=30n
+* m4 vo1   vin   v5  vdd pmos w=45n l=30n
+  m4 v5   vin    vo1 vdd pmos w=45n l=30n
+* m3 v5    v5    vdd vdd pmos w=45n l=30n
+  m3 vdd   v5    v5 vdd pmos w=45n l=30n
 
 m2 vdd   vmem  vin gnd nmos w=45n l=30n
 m1 vin   vsf   gnd gnd nmos w=45n l=30n
 
 cmem vmem gnd 500f
 c1   vo2  gnd 100f
-.probe i(m*)
+.probe i(m*) i(c*)
 ***************************
 
 * sources
 
 * 2n
 * is1 vdd vmem dc 100n
-is1 vdd vmem PL(0 0 0 100u 1n 100.1u) 
+is1 vx vmem PL(0 0 0 100u 1n 100.1u) 
 
+vs0 vx gnd dc 1.1
 vs1 vdd gnd  dc 1.1
 vs2 vlk  gnd dc 0.2
 
