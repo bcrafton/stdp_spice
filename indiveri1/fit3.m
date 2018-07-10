@@ -29,15 +29,7 @@ i_m7 = evalsig(inv_fb, 'i_m7');
 
 m7_fit = fit(v_vmem, i_m7, 'linearinterp');
 vo1_fit = fit(v_vmem, v_vo1, 'linearinterp');
-
-% plot(v_vmem, v_vo1);
-% g = fittype( 'PWL(p1, b1, m1, p2, b2, m2, b3, m3, x)', 'independent', {'x'}, 'dependent', 'vo1' );
-% vo1_fit = fit(v_vmem, v_vo1, g, 'StartPoint', [0.5, 0.95, -0.3, 0.7, -3, 0.7, 0.1, -0.3]);
-% disp(vo1_fit);
-
-% x = linspace(0, 1, 100);
-% plot(x, vo1_fit(x));
-
+    
 %%%%%%%%%%%%%%%%%%%%%%
 % reset
 
@@ -60,10 +52,39 @@ v_vo1 = evalsig(inv_slew, 'v_vo1');
 v_vo2 = evalsig(inv_slew, 'v_vo2');
 i_vso2 = evalsig(inv_slew, 'i_vso2');
 
+%disp(mean(i_vso2))
+%disp(std(i_vso2))
+%plot(v_vo1, i_vso2)
+
 i_vso2_fit = fit([v_vo1, v_vo2], i_vso2, 'poly44');
+
+%%%%%%%%%%%%%%%%%%%%%%
+% plot(v_vmem, v_vo1);
+% g = fittype( 'PWL(p1, b1, m1, p2, b2, m2, b3, m3, x)', 'independent', {'x'}, 'dependent', 'vo1' );
+% vo1_fit = fit(v_vmem, v_vo1, g, 'StartPoint', [0.5, 0.95, -0.3, 0.7, -3, 0.7, 0.1, -0.3]);
+% disp(vo1_fit);
+
+%x = linspace(0, 1, 100);
+%plot(x, m20_fit(x));
+
+%x = linspace(0, 1, 100);
+%plot(x, m7_fit(x));
+
+% x = linspace(0, 1, 100);
+% plot(x, vo1_fit(x));
+
+% x1 = linspace(1, 1, 100);
+% x2 = linspace(0, 1, 100);
+n = length(v_vo1);
+y = zeros(n, 1);
+for i = 1:100
+    y(i) =  i_vso2_fit([v_vo1(i), v_vo2(i)]);
+end
+% plot(v_vo1, y);
+
 %%%%%%%%%%%%%%%%%%%%%%
 
-dt = 1e-8;
+dt = 1e-7;
 T = 1e-3;
 steps = uint32(T / dt);
 
@@ -90,8 +111,6 @@ C2 = 100e-15;
 % m12_fit(0, 0)
 % m12_fit(1, 0.6)
 % m12_fit(1, 1)
-
-
 
 for i = 1:steps
     
@@ -133,8 +152,5 @@ for i = 1:steps
     icmems(i) = icmem;
 end
 
-% disp(m20s');
 plot(Ts, vmems);
 
-% x = linspace(0, 1, 100);
-% plot(x, vo1_fit(x));
