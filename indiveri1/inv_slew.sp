@@ -7,17 +7,12 @@ m8  v4   v4    vdd vdd pmos w=45n l=30n
 ***************************
 vs1 vdd gnd dc 1
 
-vso1 vo1 gnd PWL(0m, 0, 1m, 1)
-vso2 vo2 gnd PWL(0u, 0, 5u, 1, 10u, 0, R)
-
-*vso1 vo1 gnd SIN(0, 1, 10000, 0, 0, 0)
-
-*vso1 vo1 gnd PWL(0m, -1, 10m, 1)
-*vso2 vo2 gnd SIN(0, 1, 10000, 0, 0, 0)
+vso1 vo1 gnd PWL(0, -0.5, 1, 1.5)
+vso2 vo2 gnd PWL(0, -0.5, 5m, 1.5, 10m, -0.5, R)
 
 vs4 vrfr gnd dc 0.175
 *****************************
-.tran 1n 1m
+.tran 1u 1
 .option post=1 POST_VERSION=9601 method=gear
 .probe i(m*) i(c*)
 *****************************

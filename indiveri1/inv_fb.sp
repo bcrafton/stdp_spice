@@ -16,9 +16,9 @@ vs3 vadp gnd dc 0.9
 vs4 vsf  gnd dc 0.35
 vs5 vrfr gnd dc 0.175
 
-vsmem vmem gnd PWL(0u, 0.0, 1m, 1)
+vsmem vmem gnd PWL(0, -0.5, 1, 1.5)
 *****************************
-.tran 1n 1m
+.tran 1u 1
 .option post=1 POST_VERSION=9601 * ACCURATE=1 * DVDT=2
 .probe i(m*) 
 *****************************
