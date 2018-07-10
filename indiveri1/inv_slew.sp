@@ -7,8 +7,8 @@ m8  v4   v4    vdd vdd pmos w=45n l=30n
 ***************************
 vs1 vdd gnd dc 1.1
 
-vso1 vo1 gnd PWL(0, 0, 1, 1.5)
-vso2 vo2 gnd PWL(0, 0, 5m, 1.5, 10m, 0, R)
+vso1 vo1 gnd PWL(0, 0, 1, 1.1)
+vso2 vo2 gnd PWL(0, 0, 5m, 1.1, 10m, 0, R)
 
 vs4 vrfr gnd dc 0.175
 *****************************

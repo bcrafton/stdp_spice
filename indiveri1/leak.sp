@@ -4,7 +4,7 @@ m20 vmem vlk   gnd gnd nmos w=45n l=30n
 ***************************
 vs1 vdd gnd dc 1.1
 vs2 vlk gnd dc 0.2
-vs3 vmem gnd PWL(0, 0, 1, 1.5)
+vs3 vmem gnd PWL(0, 0, 1, 1.1)
 *****************************
 .tran 1u 1
 .option post=1 POST_VERSION=9601 method=gear
