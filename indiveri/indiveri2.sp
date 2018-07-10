@@ -39,6 +39,7 @@ c1   vo2  gnd 100f
 * 2n
 * is1 vdd vmem dc 100n
 is1 vx vmem PL(0 0 0 100000n 0.10n 100000.001n)
+* is1 vdd vmem dc 0.1n
 
 vs0 vx gnd dc 1.1
 vs1 vdd gnd  dc 1.1
