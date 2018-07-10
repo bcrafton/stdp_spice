@@ -2,8 +2,8 @@
 ***************************
 m11 v3   vrfr  gnd gnd nmos w=45n l=30n
 m10 vo2  vo1   v3  gnd nmos w=45n l=30n
-m9  vo2  vo1   v4  vdd pmos w=45n l=30n
-m8  v4   v4    vdd vdd pmos w=45n l=30n
+m9  v4   vo1   vo2 vdd pmos w=45n l=30n
+m8  vdd  v4    v4  vdd pmos w=45n l=30n
 ***************************
 vs1 vdd gnd dc 1.1
 
