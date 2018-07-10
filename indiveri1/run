@@ -1,0 +1,4 @@
+hspice inv_fb.sp;
+hspice inv_slew.sp;
+hspice reset.sp;
+hspice leak.sp;

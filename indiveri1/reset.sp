@@ -2,8 +2,8 @@
 ***************************
 m12 vmem vo2 gnd gnd nmos w=45n l=30n
 ***************************
-vs1 vdd  gnd dc 1
-vs2 vmem gnd PWL(0, -0.5, 1, 1.5)
+vs1 vdd  gnd dc 1.1
+vs2 vmem gnd PWL(0, 0, 1, 1.5)
 vs3 vo2  gnd SIN(0.5, 0.7, 1000, 0, 0, 0)
 *****************************
 .tran 1u 1
