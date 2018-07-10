@@ -34,16 +34,16 @@ vs3 vadp gnd dc 0.9
 vs4 vsf  gnd dc 0.25
 vs5 vrfr gnd dc 0.2
 
-is1 vdd vmem PL(0n 0m 5n 4m)
+is1 vdd vmem PL(0n 0 0n 0.25 1n 0.5 1n 1.0) 
 
 * vsmem vmem gnd PWL(0m, 0, 1m, 1, 2m, 0, R)
-vsmem vmem gnd SIN(0.6, 0.8, 25000, 0, 0, 0)
+vsmem vmem gnd SIN(0.6, 0.8, 100, 0, 0, 0)
 
 * vso2 vo2 gnd PWL(0m, 0, 1u, 1, 2u, 0, R)
-vso2 vo2 gnd SIN(0.6, 0.8, 1000000, 0, 0, 0)
+vso2 vo2 gnd SIN(0.6, 0.8, 10000, 0, 0, 0)
 
 *****************************
-.tran 25n 4m
+.tran 1u 1
 .option post=1 POST_VERSION=9601 method=gear
 .probe i(m*) i(is1)
 *****************************

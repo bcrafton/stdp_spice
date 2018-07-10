@@ -1,14 +1,63 @@
 
 ***************************
-m12 vmem vo2 gnd gnd nmos w=45n l=30n
+m20 vmem vlk   gnd gnd nmos w=45n l=30n
+
+* m13 vspk vo1   vdd  vdd pmos w=45n l=30n
+  m13 vdd  vo1   vspk vdd pmos w=45n l=30n
+m14 vspk vo1   gnd gnd nmos w=45n l=30n
+
+m12 vmem vo2   gnd gnd nmos w=45n l=30n
+
+m11 v3   vrfr  gnd gnd nmos w=45n l=30n
+m10 vo2  vo1   v3  gnd nmos w=45n l=30n
+* m9  vo2  vo1   v4  vdd pmos w=45n l=30n
+  m9  v4  vo1    vo2 vdd pmos w=45n l=30n
+* m8  v4   v4    vdd vdd pmos w=45n l=30n
+  m8  vdd   v4   v4  vdd pmos w=45n l=30n
+
+* m7 vmem  v5    v6   vdd pmos w=45n l=30n
+  m7 v6    v5    vmem vdd pmos w=45n l=30n
+* m6 v6    vo1   vdd  vdd pmos w=45n l=30n
+  m6 vdd   vo1   v6   vdd pmos w=45n l=30n
+
+m5 vo1   vin   gnd gnd nmos w=45n l=30n
+* m4 vo1   vin   v5  vdd pmos w=45n l=30n
+  m4 v5   vin    vo1 vdd pmos w=45n l=30n
+* m3 v5    v5    vdd vdd pmos w=45n l=30n
+  m3 vdd   v5    v5 vdd pmos w=45n l=30n
+
+m2 vdd   vmem  vin gnd nmos w=45n l=30n
+m1 vin   vsf   gnd gnd nmos w=45n l=30n
+
+cmem vmem gnd 500f
+c1   vo2  gnd 100f
+.probe i(m*) i(c*) i(is1)
 ***************************
-vs1 vdd  gnd dc 1
-vs2 vmem gnd PWL(0m, 0, 1m, 1)
-vs3 vo2  gnd SIN(0.5, 0.5, 10000, 0, 0, 0)
+
+* sources
+
+* 2n
+* is1 vdd vmem dc 100n
+is1 vx vmem PL(0 0 0 100000n 0.10n 100000.001n)
+* is1 vdd vmem dc 0.1n
+
+vs0 vx gnd dc 1.1
+vs1 vdd gnd  dc 1.1
+vs2 vlk  gnd dc 0.2
+
+* pmos
+vs3 vadp gnd dc 0.9
+
+* vsf = 0.65
+vs4 vsf  gnd dc 0.35
+
+* rfr = 300, 350, 450
+vs5 vrfr gnd dc 0.175
+
 *****************************
-.tran 1n 1m
-.option post=1 POST_VERSION=9601 method=gear
-.probe i(m*) i(c*)
+.tran 1n 100m
+.option post=2 nomod
+.probe m
 *****************************
 
 * PTM Low Power 45nm Metal Gate / High-K / Strained-Si
@@ -151,4 +200,3 @@ vs3 vo2  gnd SIN(0.5, 0.5, 10000, 0, 0, 0)
 +rbps    = 15              rbdb    = 15              rbsb    = 15              ngcon   = 1             
 
 .end
-

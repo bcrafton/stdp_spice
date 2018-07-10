@@ -1,5 +1,6 @@
-function ids = NFET(i0, k, kn, vth, l, x, y)
+function ids = NFET(i0, k, kn, l, x, y)
 
+    vth = 0.325;
     ut = 0.026;
     ids = zeros(size(x));
     
