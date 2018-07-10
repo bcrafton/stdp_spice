@@ -15,7 +15,7 @@ vso2 vo2 gnd PWL(0u, 0, 5u, 1, 10u, 0, R)
 *vso1 vo1 gnd PWL(0m, -1, 10m, 1)
 *vso2 vo2 gnd SIN(0, 1, 10000, 0, 0, 0)
 
-vs4 vrfr gnd dc 0.2
+vs4 vrfr gnd dc 0.175
 *****************************
 .tran 1n 1m
 .option post=1 POST_VERSION=9601 method=gear

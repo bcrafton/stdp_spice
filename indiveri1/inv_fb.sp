@@ -13,8 +13,8 @@ m1 vin  vsf  gnd  gnd nmos w=45n l=30n
 vs1 vdd gnd  dc 1.1
 vs2 vlk  gnd dc 0.2
 vs3 vadp gnd dc 0.9
-vs4 vsf  gnd dc 0.25
-vs5 vrfr gnd dc 0.2
+vs4 vsf  gnd dc 0.35
+vs5 vrfr gnd dc 0.175
 
 vsmem vmem gnd PWL(0u, 0.0, 1m, 1)
 *****************************
