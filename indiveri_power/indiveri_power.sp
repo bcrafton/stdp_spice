@@ -46,7 +46,7 @@ xneuron1 vdd vin vout neuron
 is1 vdd vin PL(0 0 0 100u 1n 100.1u) 
 vs1 vdd gnd dc 1.1
 *****************************
-.tran 1n 10m
+.tran 1n 1
 .option post=1 POST_VERSION=9601 method=gear
 .PLOT TRAN P(xneuron1)
 *****************************
