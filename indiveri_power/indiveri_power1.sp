@@ -36,14 +36,14 @@ c1   vo2  gnd 100f
 
 vs1 vlk  gnd dc 0.2
 vs2 vadp gnd dc 0.9
-vs3 vsf  gnd dc 0.2
-vs4 vrfr gnd dc 0.2
+vs3 vsf  gnd dc 0.35
+vs4 vrfr gnd dc 0.175
 
 .ends neuron
 ***************************
 xneuron1 vdd vin vout neuron
 
-is1 vdd vin PL(0 0 0 100u 1n 100.1u) 
+is1 vdd vin PL(0 0 0 100u 0.10n 100.1u) 
 vs1 vdd gnd dc 1.1
 *****************************
 .tran 1n 1
